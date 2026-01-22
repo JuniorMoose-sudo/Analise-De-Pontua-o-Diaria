@@ -10,10 +10,19 @@ from charts import (
     plot_locality_analysis
 )
 from details import show_tech_details
+from auth import check_authentication, login_form, logout_button
 
 def main():
     st.set_page_config(layout="wide", page_title="Painel de Produtividade", page_icon="📊")
+
+    if not check_authentication():
+        login_form()
+        return
+
     apply_custom_styles()
+
+    with st.sidebar:
+        logout_button()
 
     st.title("📊 Dashboard de Produtividade por Técnico")
     uploaded_file = st.file_uploader("Envie a planilha Excel", type=["xlsx", "xls"])
